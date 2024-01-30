@@ -1,6 +1,15 @@
 import { Button } from "@/components/ui/button";
+import { UserButton } from "@clerk/nextjs";
+
 import Image from "next/image";
 
 export default function Home() {
-  return <Button>Hello Board</Button>;
+  return (
+    <div className="flex flex-col gap-y-4">
+      <div> Athenticated Users Only</div>
+      <div>
+        <UserButton />
+      </div>
+    </div>
+  );
 }
