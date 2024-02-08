@@ -7,7 +7,7 @@ import { Rectangle } from "./rectangle";
 
 interface LayerPreviewProps {
   onLayerPointerDown: (e: React.PointerEvent, layerId: string) => void;
-  selectionColor?: string;
+  selectionColor: string;
   id: string;
 }
 
@@ -18,9 +18,8 @@ export const LayerPreview = memo(({ id, onLayerPointerDown, selectionColor }: La
 
   switch (layer.type) {
     case LayerType.Rectangle:
-      return (
-        <Rectangle id={id} layer={layer} onPointerDown={onLayerPointerDown} selectionColor={selectionColor as string} />
-      );
+      return <Rectangle id={id} layer={layer} onPointerDown={onLayerPointerDown} selectionColor={selectionColor} />;
+
     default:
       console.warn("Unknown layer type");
       return null;
