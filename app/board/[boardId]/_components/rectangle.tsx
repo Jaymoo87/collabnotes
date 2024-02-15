@@ -22,7 +22,7 @@ export const Rectangle = ({ id, layer, onPointerDown, selectionColor }: Rectangl
       y={0}
       width={width}
       height={height}
-      fill={fill ? colorToCss(fill) : "000"}
+      fill={fill ? colorToCss(fill) : "#000"}
       stroke={selectionColor || "transparent"}
       strokeWidth={1}
     />
