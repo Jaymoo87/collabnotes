@@ -15,7 +15,7 @@ export const Rectangle = ({ id, layer, onPointerDown, selectionColor }: Rectangl
 
   return (
     <rect
-      className="dropshadow-md"
+      className="dropshadow-md "
       onPointerDown={(e) => onPointerDown(e, id)}
       style={{ transform: `translate(${x}px, ${y}px)` }}
       x={0}
