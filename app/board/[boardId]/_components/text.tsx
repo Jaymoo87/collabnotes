@@ -15,7 +15,7 @@ const font = Kalam({
 
 const calculateFontSize = (width: number, height: number) => {
   const maxFontSize = 96;
-  const scaleFactor = 0.5;
+  const scaleFactor = 0.25;
   const fontSizeBasedOnHeight = height * scaleFactor;
   const fontSizeBasedOnWidth = width * scaleFactor;
 
@@ -56,7 +56,7 @@ export const Text = ({ id, layer, onPointerDown, selectionColor }: TextProps) =>
           font.className
         )}
         style={{ color: fill ? colorToCss(fill) : "#000", fontSize: calculateFontSize(width, height) }}
-        html={value || "text"}
+        html={value || ""}
         onChange={handleContentChange}
       />
     </foreignObject>

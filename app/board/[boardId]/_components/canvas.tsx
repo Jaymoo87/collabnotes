@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { CanvasState, CanvasMode, Camera, Color, LayerType, Point, Side, XYWH } from "@/types/canvas";
 
@@ -35,6 +35,8 @@ import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
 import { Path } from "./path";
+import { useDisableScrollBounce } from "@/hooks/use-disable-scroll-bounce";
+import { useDeleteLayers } from "@/hooks/use-delete-layers";
 
 const MAX_LAYERS = 100;
 
@@ -57,9 +59,11 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     b: 102,
   });
 
+  const deleteLayers = useDeleteLayers();
   const history = useHistory();
   const canUndo = useCanUndo();
   const canRedo = useCanRedo();
+  useDisableScrollBounce();
 
   const insertLayer = useMutation(
     (
@@ -319,6 +323,32 @@ export const Canvas = ({ boardId }: CanvasProps) => {
   const onPointerLeave = useMutation(({ setMyPresence }) => {
     setMyPresence({ cursor: null });
   }, []);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      switch (e.key) {
+        // case "Backspace": {
+        //   deleteLayers();
+        //   break;
+        // }
+        case "z": {
+          if (e.ctrlKey || e.metaKey) {
+            if (e.shiftKey) {
+              history.redo();
+            } else {
+              history.undo();
+            }
+            break;
+          }
+        }
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [deleteLayers, history]);
 
   const selections = useOthersMapped((other) => other.presence.selection);
 
